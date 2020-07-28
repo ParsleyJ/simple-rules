@@ -1,4 +1,4 @@
-#Simple-rules
+# Simple-rules
 A simple rule engine and symbolic forward reasoning library, written in Java.
 
 Use this library to write Java applications that can use symbolic reasoning to solve problems and be reactive to the environment. This library provides a set of classes and methods that can be used to build declarative rules and knowledge bases. Feed the reasoning engine with structured knowledge and watch it automatically draw conclusions and react to events, using the power of sound logical inference by forward-chaining and unification.
