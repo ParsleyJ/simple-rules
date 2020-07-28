@@ -5,24 +5,24 @@ import parsleyj.simplerules.unify.UnificationResult;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiFunction;
 
 /**
- * A native fact is a special kind of {@link Relation} used to provide custom hard-coded unification implementations.
+ * A special kind of {@link Relation} used to provide facts that can be unified via a custom
+ * hard-coded unification implementation.
  * Useful to create libraries of native facts (e.g. for arithmetical operations etc...).
- * Native facts are collected into modules; each module is represented by a string name.
+ * Native facts are collected into modules for improved indexing; each module is represented by a string name.
  */
-public class NativeFact extends Relation {
+public class NativeFact extends RelationImpl implements CustomUnifiable {
+
 
     @FunctionalInterface
-    public interface NativeFactCustomUnification {
+    public interface NativeFactCustomUnificationFunction {
         UnificationResult unify(NativeFact self, UnificationResult theta, Relation other);
     }
 
-
     public static final String NATIVEFACTS_DIR = "NATIVEFACTS";
     private final String module;
-    private final NativeFactCustomUnification customUnification;
+    private final NativeFactCustomUnificationFunction customUnification;
 
 
     /**
@@ -31,7 +31,7 @@ public class NativeFact extends Relation {
     public NativeFact(Type type,
                       String module,
                       String name,
-                      NativeFactCustomUnification customUnification) {
+                      NativeFactCustomUnificationFunction customUnification) {
         super(type, name);
         this.module = module;
         this.customUnification = customUnification;
@@ -44,7 +44,7 @@ public class NativeFact extends Relation {
                       String module,
                       String name,
                       List<Term> terms,
-                      NativeFactCustomUnification customUnification) {
+                      NativeFactCustomUnificationFunction customUnification) {
         super(type, name, terms);
         this.module = module;
         this.customUnification = customUnification;
@@ -57,27 +57,23 @@ public class NativeFact extends Relation {
     }
 
 
-    private static List<String> genDirectoryNameForNative(String module, String name, int arity) {
+    static List<String> genDirectoryNameForNative(String module, String name, int arity) {
         ArrayList<String> result = new ArrayList<>();
         result.add(Term.GLOBAL_DIR);
         result.add(NATIVEFACTS_DIR);
         result.add(module);
-        result.add(getPredicateStyleName(name, arity));
+        result.add(Relation.getPredicateStyleName(name, arity));
         return result;
     }
 
-    /**
-     * The unification operation for this native fact. This method internally calls the provided callback used to
-     * implement the semantics of unification for this fact.
-     *
-     * @param theta theta value as input of unification, containing the partial variable bindings.
-     * @param other the other term to be unified with this native fact; since native fact has the form of a relation,
-     *              it has to be a relation.
-     * @return theta value after the unification. It may be a solution with eventual updated variable bindings, or a
-     * failure value.
-     */
-    public UnificationResult customUnify(UnificationResult theta, Relation other) {
-        return customUnification.unify(this, theta, other);
+
+    @Override
+    public UnificationResult customUnify(UnificationResult theta, Term other) {
+        if(other instanceof Relation){
+            Relation relation = (Relation) other;
+            return customUnification.unify(this, theta, relation);
+        }
+        return UnificationResult.FAILURE; //other has to be a relation
     }
 
 

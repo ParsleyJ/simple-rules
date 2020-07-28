@@ -3,7 +3,7 @@ package parsleyj.simplerules.examples.vacuumcleaner;
 import parsleyj.simplerules.forward.FCKnowledgeBase;
 import parsleyj.simplerules.forward.SimpleForwardChaining;
 import parsleyj.simplerules.terms.Atom;
-import parsleyj.simplerules.terms.Relation;
+import parsleyj.simplerules.terms.RelationImpl;
 import parsleyj.simplerules.terms.Term;
 
 import java.util.ArrayList;
@@ -50,8 +50,8 @@ public class VacuumReasoningEngine extends Thread{
         // adds an action to both rules; when an action is determined to be performed by the reasoning engine,
         //  it is enqueued in the agent's actuators queue.
         ruleBuilders.forEach(ruleBuilder -> ruleBuilder.withAction(unifiedHead->{
-           if(unifiedHead instanceof Relation){
-               Relation action = (Relation) unifiedHead;
+           if(unifiedHead instanceof RelationImpl){
+               RelationImpl action = (RelationImpl) unifiedHead;
                if(action.length() == 3 && action.getName().equals("action")) {
                    List<Term> terms = action.toJavaList();
                    // getting the action type
@@ -78,7 +78,7 @@ public class VacuumReasoningEngine extends Thread{
         while (true) {
             try {
                 VacuumPerceptType perceptType = perceptQueue.take();
-                Relation percept = relation("percept", new Atom<>(perceptIDCounter++), new Atom<>(perceptType));
+                RelationImpl percept = relation("percept", new Atom<>(perceptIDCounter++), new Atom<>(perceptType));
                 System.out.println("Perceived: "+percept);
                 currentKB.addFact(percept);
                 currentKB = SimpleForwardChaining.getToFixedPoint(currentKB).getUpdatedKB();

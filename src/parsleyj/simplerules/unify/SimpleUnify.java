@@ -26,10 +26,10 @@ public class SimpleUnify {
     ) {
         if (theta.isFailure()) {
             return UnificationResult.FAILURE;
-        } else if (x instanceof NativeFact && y instanceof Relation) {
-            return ((NativeFact) x).customUnify(theta, ((Relation) y));
-        } else if (x instanceof Relation && y instanceof NativeFact) {
-            return ((NativeFact) y).customUnify(theta, ((Relation) x));
+        } else if (x instanceof CustomUnifiable) {
+            return ((CustomUnifiable) x).customUnify(theta, y);
+        } else if (y instanceof CustomUnifiable) {
+            return ((CustomUnifiable) y).customUnify(theta, x);
         } else if (x.eq(y)) {
             return theta;
         } else if (x instanceof Variable) {

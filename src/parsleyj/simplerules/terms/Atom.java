@@ -60,12 +60,12 @@ public class Atom<T> implements Term {
 
     @Override
     public void createUniqueVarNames(Uniquer<String> uniquer, HashMap<String, String> namesMap) {
-        //DO NOTHING
+        //No variables, do nothing
     }
 
     @Override
     public void populateVarTypes(Map<String, Type> typesMap) {
-        //DO NOTHING
+        //No variables, do nothing
     }
 
 

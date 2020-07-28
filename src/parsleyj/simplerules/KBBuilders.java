@@ -51,7 +51,7 @@ public class KBBuilders {
 
 
     /**
-     * Starts the method call chain used to build a {@link Relation}.
+     * Starts the method call chain used to build a {@link RelationImpl}.
      *
      * @param name the name of the relation to be built
      * @return a relation builder object
@@ -62,39 +62,26 @@ public class KBBuilders {
 
 
     /**
-     * Creates a {@link Relation} with specified name and no terms.
+     * Creates a {@link RelationImpl} with specified name and no terms.
      *
      * @param name the name of the relation
      * @return the relation
      */
-    public static Relation smallRel(String name) {
-        return new Relation(Type.ANY, name);
+    public static RelationImpl smallRel(String name) {
+        return new RelationImpl(Type.ANY, name);
     }
 
     /**
-     * Creates a {@link Relation} with specified name and terms.
+     * Creates a {@link RelationImpl} with specified name and terms.
      *
      * @param name  the name of the relation
      * @param terms the terms of the relation
      * @return the relation
      */
-    public static Relation relation(String name, Term... terms) {
-        return new Relation(Type.ANY, name, Arrays.asList(terms));
+    public static RelationImpl relation(String name, Term... terms) {
+        return new RelationImpl(Type.ANY, name, Arrays.asList(terms));
     }
 
-    /**
-     * TODO: EXPERIMENTAL
-     */
-    public static SRList list(Term... terms) {
-        return new SRList(terms);
-    }
-
-    /**
-     * TODO: EXPERIMENTAL
-     */
-    public static SRList list(List<Term> terms) {
-        return new SRList(terms);
-    }
 
     /**
      * Creates a simple structural term with the provided list of sub-terms
@@ -152,12 +139,12 @@ public class KBBuilders {
      */
     public static class RelationBuilder {
         /**
-         * The chosen name of the to-be-created {@link Relation}
+         * The chosen name of the to-be-created {@link RelationImpl}
          */
         private final String name;
 
         /**
-         * The chosen terms of the to-be-created {@link Relation}
+         * The chosen terms of the to-be-created {@link RelationImpl}
          */
         private final List<Term> terms = new ArrayList<>();
 
@@ -168,7 +155,7 @@ public class KBBuilders {
         /**
          * Adds the specified terms to this relation builder.
          *
-         * @param terms terms that will be appended to the terms of the to-be-created {@link Relation}
+         * @param terms terms that will be appended to the terms of the to-be-created {@link RelationImpl}
          * @return this builder object for method-call-chaining
          */
         public RelationBuilder withTerms(Term... terms) {
@@ -179,7 +166,7 @@ public class KBBuilders {
         /**
          * Adds the specified list of terms to this relation builder.
          *
-         * @param terms terms that will be appended to the terms of the to-be-created {@link Relation}
+         * @param terms terms that will be appended to the terms of the to-be-created {@link RelationImpl}
          * @return this builder object for method-call-chaining
          */
         public RelationBuilder withTerms(List<Term> terms) {
@@ -190,7 +177,7 @@ public class KBBuilders {
         /**
          * Adds the specified term to this relation builder.
          *
-         * @param term term that will be appended to the terms of the to-be-created {@link Relation}
+         * @param term term that will be appended to the terms of the to-be-created {@link RelationImpl}
          * @return this builder object for method-call-chaining
          */
         public RelationBuilder withTerm(Term term) {
@@ -199,12 +186,12 @@ public class KBBuilders {
         }
 
         /**
-         * Builds a new {@link Relation} with the provided information.
+         * Builds a new {@link RelationImpl} with the provided information.
          *
          * @return the relation
          */
-        public Relation build() {
-            return new Relation(Type.ANY, name, terms);
+        public RelationImpl build() {
+            return new RelationImpl(Type.ANY, name, terms);
         }
     }
 
