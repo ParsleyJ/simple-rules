@@ -8,7 +8,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Knowledge base, specialized for forward reasoning algorithms.
+ * Knowledge base, optimized for {@link SimpleForwardChaining} algorithm.
  */
 public class FCKnowledgeBase extends KnowledgeBase {
 

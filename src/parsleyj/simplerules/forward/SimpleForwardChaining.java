@@ -41,10 +41,6 @@ public class SimpleForwardChaining {
                 }
             }
 
-            //TODO [performances] filter rules: only the ones with premises candidate to match the newly added facts
-            //                      should be attempted to be fired.
-
-            //TODO [performances] investigate parallelism in rule checking
             List<Rule> rules = kb.getRules();
             for (Rule rule : rules) {
                 Rule std = rule.standardizeApart(uniquer);
@@ -53,7 +49,7 @@ public class SimpleForwardChaining {
                 while (FCInternalContinuation.hasNext()) {
                     List<Term> selectedFacts = FCInternalContinuation.next();
 
-                    //TODO [performances] conjunct ordering with some heuristic (e.g. MRV)
+
 
                     UnificationResult ur = SimpleUnify.conjunctUnify(UnificationResult.empty(), selectedFacts, std.getPremises());
                     if (!ur.isFailure()) {
@@ -66,25 +62,11 @@ public class SimpleForwardChaining {
                         if (kb.getAllFacts().stream().noneMatch(f -> f.justARenaming(q)) &&
                                 newFacts.stream().noneMatch(f -> f.justARenaming(q))) {
 
-
-                            //TODO [retract] when a fact is set to be added, inform the KB that the selectedFacts
-                            //      are what allowed q to be produced (info used later for retraction)
-
-                            //TODO [better actions] move the choice to add facts to rule actions (assert command)
                             newFacts.add(q);
 
-
-                            //TODO [better actions] executeAction should expose as parameter an interface to the
-                            //    FC engine (for assertion, retraction, execution control, fact editing etc...)
                             rule.executeAction(q);
 
-                            //TODO [retract] when a retract action is requested, delete the corresponding
-                            //      generated q and recompute the fixed point
-
                             if (stopAtQuery) {
-
-                                //TODO [more solutions] if the stopAtQuery feature is to be kept, consider returning a
-                                //      FCInternalContinuation (to allow multiple solutions querying)
                                 UnificationResult unify = SimpleUnify.unify(q, query);
                                 if (!unify.isFailure()) {
                                     kb.addFacts(newFacts);

@@ -9,8 +9,6 @@ import java.util.List;
 
 /**
  * Object containing a generic knowledge base of facts and rules.
- *
- * TODO generalize?
  */
 public class KnowledgeBase {
     /**
@@ -26,7 +24,7 @@ public class KnowledgeBase {
      * Converts all the facts as rules with no bodies, and returns the list of all the rules (the already defined ones
      * and the converted ones).
      */
-    public List<Rule> getEverythingAsRule(){//TODO fix this
+    public List<Rule> getEverythingAsRule(){
         List<Rule> result = new ArrayList<>();
         getAllFacts().forEach(f -> result.add(new Rule(Collections.emptyList(), f)));
         result.addAll(rules);

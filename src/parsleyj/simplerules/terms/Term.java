@@ -10,10 +10,6 @@ import java.util.*;
  */
 public interface Term  {
 
-    //todo immutability
-    //todo lists
-    //todo maps
-    //todo annotations
 
     /**
      * Global indexing directory

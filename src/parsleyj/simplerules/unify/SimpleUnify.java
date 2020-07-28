@@ -36,7 +36,7 @@ public class SimpleUnify {
             return unifyVar((Variable) x, y, theta);
         } else if (y instanceof Variable) {
             return unifyVar((Variable) y, x, theta);
-        } else if (x instanceof Struct && y instanceof Struct) { //TODO type compatibility checks
+        } else if (x instanceof Struct && y instanceof Struct) {
             Struct structX = ((Struct) x);
             Struct structY = ((Struct) y);
             if (structX.toJavaList().size() != structY.toJavaList().size()) {

@@ -8,7 +8,7 @@ import java.util.Map;
 
 
 /**
- * A Struct is term made of a sequence of sub-terms.
+ * A Struct is a term made of a sequence of sub-terms.
  */
 public interface Struct extends Term {
     String STRUCT_DIR = "STRUCT";
@@ -40,7 +40,7 @@ public interface Struct extends Term {
     boolean empty();
 
 
-    default int length() { //TODO optimize with memoization and immutability
+    default int length() {
         return toJavaList().size();
     }
 

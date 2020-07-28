@@ -16,15 +16,6 @@ import static parsleyj.simplerules.KBBuilders.*;
 public class Factorial {
 
     public static void main(String[] argv){
-         /*
-            factorial(0, 1).
-            factorial(N, NFact) :-
-                N > 0,
-                Nminus1 is N - 1,
-                factorial(Nminus1, Nminus1Fact),
-                NFact is Nminus1Fact * N.
-        */
-
         // building the knowledge base
         FCKnowledgeBase factorialKB = kb()
                 // add all the native integer facts, used to perform comparisons and arithmetical operations
