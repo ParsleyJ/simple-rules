@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * Extremely simple demonstration of agent application which uses the forward chaining system and simple actions to
+ * Demonstration of agent application which uses the forward chaining system and actions to
  * create a very simple reactive agent with reasoning support.
  * The agent continuously checks if the current cell is dirty or clean.
  * In the first case, it reacts by starting to clean the cell; otherwise, it moves to the "next" cell.
